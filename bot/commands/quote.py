@@ -5,7 +5,7 @@ import re
 logger = logging.getLogger(__name__)
 
 
-class QuoteCommand(object):
+class Quote(object):
     def __init__(self):
         self.usage = usage
         self.allowed = allowed

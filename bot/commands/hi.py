@@ -5,7 +5,7 @@ import re
 logger = logging.getLogger(__name__)
 
 
-class HiCommand(object):
+class Hi(object):
     def __init__(self):
         self.usage = usage
         self.allowed = allowed

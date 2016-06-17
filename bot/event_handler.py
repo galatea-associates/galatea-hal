@@ -1,11 +1,11 @@
 import json
 import logging
 
-from commands.hi import HiCommand
-from commands.quote import QuoteCommand
+from commands.hi import Hi
+from commands.quote import Quote
 
 logger = logging.getLogger(__name__)
-commands = [HiCommand(),QuoteCommand()]
+commands = [Hi(), Quote()]
 
 
 class RtmEventHandler(object):
