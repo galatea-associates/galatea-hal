@@ -1,6 +1,6 @@
-name: Beepboop Starterbot
-description: A simple Python bot sample for Beep Boop
-avatar: resources/avatar.png
+name: Galatea Hal
+description: Our version of Hal
+avatar: resources/hal.png
 background: resources/background.png
 config:
   - name: LOG_LEVEL
