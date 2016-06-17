@@ -40,7 +40,7 @@ I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
 
 ### Assumptions
 We assume you understand the following:
-- Python2
+- How to develop in Python2
 - How to interact with GitHub
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
@@ -71,7 +71,7 @@ Create a bot for yourself to test hal:  https://galaslack.slack.com/apps/manage/
 To start your local version of hal, run the following steps:
 - cd to your project root folder (i.e. where you have requirements.txt)
 - pip install -r requirements.txt
-- set SLACK_TOKEN=<YOUR TEST HAL BOT's SLACK TOKEN>
+- set SLACK_TOKEN=[YOUR TEST HAL BOT's SLACK TOKEN]
 - python ./bot/app.py
 
 Things are looking good if the console prints something like:
