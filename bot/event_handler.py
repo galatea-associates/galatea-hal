@@ -1,5 +1,6 @@
 import json
 import logging
+import re
 
 from commands.hi import Hi
 from commands.quote import Quote
@@ -39,20 +40,27 @@ class RtmEventHandler(object):
         # Filter out messages from the bot itself
         # Event won't have a user if slackbot is unfurling messages for you
         if event.has_key('user') and not self.clients.is_message_from_me(event['user']):
-            bot_uid = self.clients.bot_user_id()
             msg_txt = event['text']
-            channel = event['channel']
-            found_command = False
-            usage = "Hello Human.  I'll *_respond_* to the following commands in channel ["+channel+"]:\n"
-            if self.clients.is_bot_mention(msg_txt):
-                for c in commands:
-                    if c.allowed(channel):
-                        usage = usage + "> " + c.usage(bot_uid) + "\n"
-                        if c.matches(event):
-                            found_command = True
-                            c.do_it(self.msg_writer,event)
-                            break
 
-                if not found_command:
-                    self.msg_writer.send_message(channel, usage)
+            # Filter out any messages where this bot isn't mentioned
+            if not self.clients.is_bot_mention(msg_txt):
+                return
+
+            bot_uid = self.clients.bot_user_id()
+            channel_id = event['channel']
+
+            if re.search('help$', msg_txt):
+                self.msg_writer.write_help(channel_id, commands)
+                return
+
+            found_command = False
+            for c in commands:
+                if c.allowed(channel_id):
+                    if c.matches(event):
+                        found_command = True
+                        c.do_it(self.msg_writer,event)
+                        break
+
+            if not found_command:
+                self.msg_writer.write_prompt(channel_id)
 
