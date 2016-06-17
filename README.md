@@ -1,18 +1,21 @@
-starter-python-bot
+galatea-hal
 =============
 
 ## Overview
-A simple starting point for creating a Beep Boop hostable, Python based Slack bot.
+Galatea Hal is our own internal bot for useful interactions.  
 
 Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. The Slack API documentation can be found [here](https://api.slack.com/).
 
-## Assumptions
-* You have already signed up with [Beep Boop](https://beepboophq.com) and have a local fork of this project.
-* You have sufficient rights in your Slack team to configure a bot and generate/access a Slack API token.
-
 ## Usage
 
-### Run locally
+### Run in BeepBoop
+Changes pushed to the remote master branch will automatically deploy a new version of hal
+
+### Testing
+
+Note that if you are testing.  Don't connect as hal.  Create your own version of hal (e.g. @hal-raj) and connect as that.
+
+#### Run locally
 Install dependencies ([virtualenv](http://virtualenv.readthedocs.org/en/latest/) is recommended.)
 
 	pip install -r requirements.txt
@@ -24,12 +27,10 @@ Things are looking good if the console prints something like:
 
 If you want change the logging level, prepend `export LOG_LEVEL=<your level>; ` to the `python ./bot/app.py` command.
 
-### Run locally in Docker
+#### Run locally in Docker
 	docker build -t starter-python-bot .
 	docker run --rm -it -e SLACK_TOKEN=<YOUR SLACK API TOKEN> starter-python-bot
 
-### Run in BeepBoop
-If you have linked your local repo with the Beep Boop service (check [here](https://beepboophq.com/0_o/my-projects)), changes pushed to the remote master branch will automatically deploy.
 
 ### First Conversations
 When you go through the `Add your App to Slack` flow, you'll setup a new Bot User and give them a handle (like @python-rtmbot).
