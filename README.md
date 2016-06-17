@@ -40,7 +40,7 @@ I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
 
 ### Assumptions
 We assume you understand the following:
-- Python2
+- How to develop in Python2
 - How to interact with GitHub
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
