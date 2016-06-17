@@ -4,65 +4,55 @@ galatea-hal
 ## Overview
 Galatea Hal is our own internal bot for useful interactions.  
 
-Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. The Slack API documentation can be found [here](https://api.slack.com/).
-
-## Usage
-
-### Run in BeepBoop
-Changes pushed to the remote master branch will automatically deploy a new version of hal
-
-### Testing
-
-Note that if you are testing.  Don't connect as hal.  Create your own version of hal (e.g. @hal-raj) and connect as that.
-
-#### Run locally
-Install dependencies ([virtualenv](http://virtualenv.readthedocs.org/en/latest/) is recommended.)
-
-	pip install -r requirements.txt
-	export SLACK_TOKEN=<YOUR SLACK TOKEN>; python ./bot/app.py
-
-Things are looking good if the console prints something like:
-
-	Connected <your bot name> to <your slack team> team at https://<your slack team>.slack.com.
-
-If you want change the logging level, prepend `export LOG_LEVEL=<your level>; ` to the `python ./bot/app.py` command.
-
-#### Run locally in Docker
-	docker build -t starter-python-bot .
-	docker run --rm -it -e SLACK_TOKEN=<YOUR SLACK API TOKEN> starter-python-bot
-
+Hal is hosted on BeepBoop. Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. 
 
 ### First Conversations
-When you go through the `Add your App to Slack` flow, you'll setup a new Bot User and give them a handle (like @python-rtmbot).
 
 Here is an example interaction dialog that works with this bot:
 ```
 Joe Dev [3:29 PM]
-hi @python-rtmbot
+hi @hal
 
-Slacks PythonBot BOT [3:29 PM]
-Nice to meet you, @randall.barnhart!
+Hal BOT [3:29 PM]
+Nice to meet you, @hal!
 
 Joe Dev [3:30 PM]
-help @python-rtmbot
+help @hal
 
-Slacks PythonBot BOT [3:30 PM]
+Hal BOT [3:30 PM]
 I'm your friendly Slack bot written in Python.  I'll ​*​_respond_​*​ to the following commands:
->`hi @python-rtmbot` - I'll respond with a randomized greeting mentioning your user. :wave:
-> `@python-rtmbot joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:
-> `@python-rtmbot attachment` - I'll demo a post with an attachment using the Web API. :paperclip:
+>`hi @hal` - I'll respond with a randomized greeting mentioning your user. :wave:
+> `@hal joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:
+> `@hal attachment` - I'll demo a post with an attachment using the Web API. :paperclip:
 
 Joe Dev [3:31 PM]
-@python-rtmbot: joke
+@hal: joke
 
-Slacks PythonBot BOT [3:31 PM]
+Hal BOT [3:31 PM]
 Why did the python cross the road?
 
 [3:31]
 To eat the chicken on the other side! :laughing:
 ```
 
-## Code Organization
+## Development
+I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
+
+### Assumptions
+We assume you understand the following:
+- Python2
+- How to interact with GitHub
+- The slack realtime API:  https://api.slack.com/rtm  
+- How BeeBoop works: https://beepboophq.com/docs 
+
+### Dev Process
+- Ask Raj to add you as a collaborator
+- Fork this repository
+- Make your changes
+- Test your changes
+- Send Raj a pull request
+
+### Code Organization
 If you want to add or change an event that the bot responds (e.g. when the bot is mentioned, when the bot joins a channel, when a user types a message, etc.), you can modify the `_handle_by_type` method in `event_handler.py`.
 
 If you want to change the responses, then you can modify the `messenger.py` class, and make the corresponding invocation in `event_handler.py`.
@@ -73,6 +63,25 @@ The `slack_clients.py` module provides a facade of two different Slack API clien
 2. [slacker](https://github.com/os/slacker) - Web API to Slack via RESTful methods.
 
 The `slack_bot.py` module implements and interface that is needed to run a multi-team bot using the Beep Boop Resource API client, by implementing an interface that includes `start()` and `stop()` methods and a function that spawns new instances of your bot: `spawn_bot`.  It is the main run loop of your bot instance that will listen to a particular Slack team's RTM events, and dispatch them to the `event_handler`.
+
+### Testing locally (on windows)
+
+Create a bot for yourself to test hal:  https://galaslack.slack.com/apps/manage/A0F7YS25R-bots .  This bot should be called test-hal-<your name> (e.g. test-hal-raj).  This will ensure that your changes don't break production hal.  Note: be polite and disable your bot when you are not using it.
+
+To start your local version of hal, run the following steps:
+- cd to your project root folder (i.e. where you have requirements.txt)
+- pip install -r requirements.txt
+- set SLACK_TOKEN=<YOUR TEST HAL BOT's SLACK TOKEN>
+- python ./bot/app.py
+
+Things are looking good if the console prints something like:
+
+	Connected <your bot name> to <your slack team> team at https://<your slack team>.slack.com.
+
+If you want change the logging level, also `set LOG_LEVEL=<your level>`
+
+### Deploying to prod
+Changes pushed to the remote master branch will automatically deploy a new version of hal
 
 ## License
 
