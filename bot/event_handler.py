@@ -1,8 +1,11 @@
 import json
 import logging
-import re
+
+from commands.hi import HiCommand
+from commands.quote import QuoteCommand
 
 logger = logging.getLogger(__name__)
+commands = [HiCommand(),QuoteCommand()]
 
 
 class RtmEventHandler(object):
@@ -34,19 +37,22 @@ class RtmEventHandler(object):
 
     def _handle_message(self, event):
         # Filter out messages from the bot itself
-        if not self.clients.is_message_from_me(event['user']):
-
+        # Event won't have a user if slackbot is unfurling messages for you
+        if event.has_key('user') and not self.clients.is_message_from_me(event['user']):
+            bot_uid = self.clients.bot_user_id()
             msg_txt = event['text']
-
+            channel = event['channel']
+            found_command = False
+            usage = "Hello Human.  I'll *_respond_* to the following commands in channel ["+channel+"]:\n"
             if self.clients.is_bot_mention(msg_txt):
-                # e.g. user typed: "@pybot tell me a joke!"
-                if 'help' in msg_txt:
-                    self.msg_writer.write_help_message(event['channel'])
-                elif re.search('hi|hey|hello|howdy', msg_txt):
-                    self.msg_writer.write_greeting(event['channel'], event['user'])
-                elif 'joke' in msg_txt:
-                    self.msg_writer.write_joke(event['channel'])
-                elif 'attachment' in msg_txt:
-                    self.msg_writer.demo_attachment(event['channel'])
-                else:
-                    self.msg_writer.write_prompt(event['channel'])
+                for c in commands:
+                    if c.allowed(channel):
+                        usage = usage + "> " + c.usage(bot_uid) + "\n"
+                        if c.matches(event):
+                            found_command = True
+                            c.do_it(self.msg_writer,event)
+                            break
+
+                if not found_command:
+                    self.msg_writer.send_message(channel, usage)
+
