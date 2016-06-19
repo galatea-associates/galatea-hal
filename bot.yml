@@ -3,14 +3,13 @@ description: Our version of Hal
 avatar: resources/hal.png
 background: resources/background.png
 config:
-  - name: LOG_LEVEL
-    friendly_name: Severity level to show for logging.
-    info: See https://docs.python.org/2/library/logging.html#levels
-    default: DEBUG
-  - name: GALA-HAL
-    friendly_name: Hal
-    info: This is an secret option
-    type: secret
-    default: not secret though
+- name: LOG_LEVEL
+  friendly_name: Severity level to show for logging.
+  info: See https://docs.python.org/2/library/logging.html#levels
+  default: DEBUG
+- name: DERP_CONFIG
+  friendly_name: Testing the config feature
+  info: This is an secret option
+  type: secret
 screenshots:
   - screenshot: resources/screenshot1.png
