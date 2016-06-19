@@ -16,6 +16,7 @@ if __name__ == "__main__":
 
     log_level = os.getenv("LOG_LEVEL", "INFO")
     logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=log_level)
+    # Log this at error level even though it's not an error, because we want to be sure the message is seen
     logging.error("logging level: {}".format(log_level))
 
     slack_token = os.getenv("SLACK_TOKEN", "")
