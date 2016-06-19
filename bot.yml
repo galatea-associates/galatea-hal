@@ -9,9 +9,9 @@ config:
   default: DEBUG
   type: text
   global: true
-- name: DERP_CONFIG
-  friendly_name: Testing the config feature
-  info: This is an secret option
+- name: WIT_ACCESS_TOKEN
+  friendly_name: Wit server access token
+  info: This is the token used to connect to wit
   type: secret
   global: true
 screenshots:
