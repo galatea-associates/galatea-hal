@@ -40,8 +40,11 @@ I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
 
 ### Assumptions
 We assume you understand the following:
-- How to develop in Python2
-- How to interact with GitHub
+- How to develop in Python2 
+  - Make sure to download latest version of Python 2.x.  https://www.python.org/downloads/
+  - You can use your favorite editor.  I like community edition of pycharm:  https://www.jetbrains.com/pycharm/download/#section=windows) 
+- How to interact with GitHub. 
+  - This is a good set up guide:  https://help.github.com/articles/set-up-git/
 - What docker is
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
