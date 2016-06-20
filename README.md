@@ -45,6 +45,7 @@ We assume you understand the following:
 - What docker is
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
+- How Wit.wi works: https://wit.ai/
 
 ### Dev Process
 - Ask Raj to add you as a collaborator
