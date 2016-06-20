@@ -42,6 +42,7 @@ I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
 We assume you understand the following:
 - How to develop in Python2
 - How to interact with GitHub
+- What docker is
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
 
@@ -54,8 +55,6 @@ We assume you understand the following:
 
 ### Code Organization
 If you want to add or change an event that the bot responds (e.g. when the bot is mentioned, when the bot joins a channel, when a user types a message, etc.), you can modify the `_handle_by_type` method in `event_handler.py`.
-
-If you want to change the responses, then you can modify the `messenger.py` class, and make the corresponding invocation in `event_handler.py`.
 
 The `slack_clients.py` module provides a facade of two different Slack API clients which can be enriched to access data from Slack that is needed by your Bot:
 
