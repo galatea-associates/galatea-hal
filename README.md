@@ -2,7 +2,7 @@ galatea-hal
 =============
 
 ## Overview
-Galatea Hal is our own internal bot for useful interactions.  
+Galatea Hal is our own internal bot for common tasks.  
 
 Hal is hosted on BeepBoop. Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. 
 
