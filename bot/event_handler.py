@@ -29,10 +29,10 @@ class RtmEventHandler(object):
             self._handle_message(event)
         elif event_type == 'channel_joined':
             # you joined a channel
-            self.msg_writer.write_help_message(event['channel'])
+            Hi().do_it(self.msg_writer,event)
         elif event_type == 'group_joined':
             # you joined a private group
-            self.msg_writer.write_help_message(event['channel'])
+            Hi().do_it(self.msg_writer,event)
         else:
             pass
 
