@@ -1,6 +1,8 @@
 import json
 import logging
 import re
+import os
+from wit import Wit
 
 from commands.hi import Hi
 from commands.quote import Quote
@@ -13,6 +15,20 @@ class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
+
+        wit_token = os.getenv("WIT_ACCESS_TOKEN", "")
+        logging.info("wit access token: {}".format(wit_token))
+
+        if wit_token == "":
+            logging.error("WIT_ACCESS_TOKEN env var not set.  Will not be able to connect to WIT.ai!")
+
+        actions = {
+            'say': self._say,
+            'merge': self._merge,
+            'error': self._error,
+        }
+
+        self.wit_client = Wit(wit_token,actions)
 
     def handle(self, event):
 
@@ -64,3 +80,12 @@ class RtmEventHandler(object):
             if not found_command:
                 self.msg_writer.write_prompt(channel_id)
 
+    def _say(self, session_id, context, msg):
+        self.msg_writer.send_message(context['channel'], msg)
+
+    def _merge(self, session_id, context, entities, msg):
+        return context
+
+    def _error(self, session_id, context, e):
+        logging.error("Error in session {} context {}.  Err: {}".format(session_id,str(context),str(e)))
+        self.msg_writer.send_message(context['channel'], str(e))
