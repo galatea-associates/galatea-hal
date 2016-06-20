@@ -28,6 +28,10 @@ def matches(event):
 
 def do_it(msg_writer,event):
     greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
-    txt = '{}, <@{}>!'.format(random.choice(greetings), event['user'])
+    if event.has_key('user'):
+        txt = '{}, <@{}>!'.format(random.choice(greetings), event['user'])
+    else:
+        txt = '{}!'.format(random.choice(greetings))
+        
     msg_writer.send_message(event['channel'], txt)
 
