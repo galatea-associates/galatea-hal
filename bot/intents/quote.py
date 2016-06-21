@@ -1,29 +1,12 @@
 import logging
 import random
-import re
 
 logger = logging.getLogger(__name__)
 
 
 class Quote(object):
     def __init__(self):
-        self.usage = usage
-        self.allowed = allowed
-        self.matches = matches
         self.do_it = do_it
-
-
-def usage(bot_uid):
-    return "`<@" + bot_uid + "> movie quote` - I'll respond with a quote from my movie"
-
-
-def allowed(channel):
-    return True
-
-
-def matches(event):
-    msg_txt = event['text']
-    return re.search('movie quote$', msg_txt)
 
 
 def do_it(msg_writer,event):

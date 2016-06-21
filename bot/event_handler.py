@@ -2,17 +2,22 @@ import json
 import logging
 import re
 
-from commands.hi import Hi
-from commands.gala_wit import GalaWit
+from gala_wit import GalaWit
+from intents.hi import Hi
+from intents.quote import Quote
 
 logger = logging.getLogger(__name__)
+
+intents = {
+    'movie-quote':Quote().do_it
+}
 
 
 class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
         self.clients = slack_clients
         self.msg_writer = msg_writer
-        self.commands = [Hi(), GalaWit(msg_writer)]
+        self.wit_client = GalaWit()
 
     def handle(self, event):
 
@@ -38,29 +43,43 @@ class RtmEventHandler(object):
 
     def _handle_message(self, event):
         # Filter out messages from the bot itself
+        if self.clients.is_message_from_me(event['user']):
+            return
+
         # Event won't have a user if slackbot is unfurling messages for you
-        if event.has_key('user') and not self.clients.is_message_from_me(event['user']):
-            msg_txt = event['text']
+        if 'user' not in event:
+            return
 
-            # Filter out any messages where this bot isn't mentioned
-            if not self.clients.is_bot_mention(msg_txt):
-                return
+        msg_txt = event['text']
+        channel_id = event['channel']
 
-            bot_uid = self.clients.bot_user_id()
-            channel_id = event['channel']
+        # Filter out message unless this bot is mentioned or it is a direct message
+        if not (self.clients.is_direct_message(channel_id) or self.clients.is_bot_mention(msg_txt)):
+            return
 
-            if re.search('help$', msg_txt):
-                self.msg_writer.write_help(channel_id, self.commands)
-                return
+        bot_uid = self.clients.bot_user_id()
 
-            found_command = False
-            for c in self.commands:
-                if c.allowed(channel_id):
-                    if c.matches(event):
-                        found_command = True
-                        c.do_it(self.msg_writer,event)
-                        break
+        # Ask wit to interpret the text and send back a list of entities
+        logger.info("Asking wit to interpret| {}".format(msg_txt))
+        resp = self.wit_client.interpret(msg_txt)
 
-            if not found_command:
-                self.msg_writer.write_prompt(channel_id)
+        # The "intent" entity sent back by wit should map to an action on our side
+        if 'intent' not in resp['entities']:
+            logger.info("Could not find an intent in the response: {}".format(resp))
+            self.msg_writer.write_prompt(channel_id)
+            return
+
+        logger.info("Found intent(s) in response {}".format(resp['entities']['intent']))
+
+        # Take the first intent for now.  We probably want to look at confidence levels in the future
+        intent = resp['entities']['intent'][0]
+        intent_value = intent['value']
+        confidence = intent['confidence']
+        logger.info("Using first intent found {} with confidence {}".format(intent_value, confidence));
+
+        if intent_value in intents:
+            intents[intent_value](self.msg_writer, event)
+        else:
+            raise ReferenceError("No function found to handle intent {}".format(intent_value))
+
 

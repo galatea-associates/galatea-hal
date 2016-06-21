@@ -18,17 +18,17 @@ class Messenger(object):
 
     def write_prompt(self, channel_id):
         bot_uid = self.clients.bot_user_id()
-        txt = "Whut? I didn't quite understand... Can I help you? (e.g. `<@" + bot_uid + "> help`)"
+        txt = "Whut? I didn't quite understand that..."
         self.send_message(channel_id, txt)
 
-    def write_help(self,channel_id,commands):
-        bot_uid = self.clients.bot_user_id()
-        usage = "Hello Human!  I'll *_respond_* to the following commands in channel [" + channel_id + "]:\n"
-        for c in commands:
-            if c.allowed(channel_id):
-                usage = usage + "> " + c.usage(bot_uid) + "\n"
-
-        self.send_message(channel_id, usage)
+#    def write_help(self,channel_id,intents):
+#        bot_uid = self.clients.bot_user_id()
+#        usage = "Hello Human!  I'll *_respond_* to the following intents in channel [" + channel_id + "]:\n"
+#        for c in intents:
+#            if c.allowed(channel_id):
+#                usage = usage + "> " + c.usage(bot_uid) + "\n"
+#
+#        self.send_message(channel_id, usage)
 
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)

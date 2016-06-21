@@ -32,6 +32,9 @@ class SlackClients(object):
         else:
             return False
 
+    def is_direct_message(self,channel_id):
+        return re.search('^D', channel_id)
+
     def send_user_typing_pause(self, channel_id, sleep_time=3.0):
         user_typing_json = {"type": "typing", "channel": channel_id}
         self.rtm.server.send_to_websocket(user_typing_json)
