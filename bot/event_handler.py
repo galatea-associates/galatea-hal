@@ -1,10 +1,11 @@
 import json
 import logging
-import re
 
 from gala_wit import GalaWit
 from intents.hi import Hi
 from intents.quote import Quote
+from slack_clients import is_direct_message
+
 
 logger = logging.getLogger(__name__)
 
@@ -54,10 +55,13 @@ class RtmEventHandler(object):
         channel_id = event['channel']
 
         # Filter out message unless this bot is mentioned or it is a direct message
-        if not (self.clients.is_direct_message(channel_id) or self.clients.is_bot_mention(msg_txt)):
+        if not (is_direct_message(channel_id) or self.clients.is_bot_mention(msg_txt)):
             return
 
-        bot_uid = self.clients.bot_user_id()
+        # Remove mention of the bot so that the rest of the code doesn't need to
+        msg_txt = self.clients.remove_mention(msg_txt).strip()
+
+        # bot_uid = self.clients.bot_user_id()
 
         # Ask wit to interpret the text and send back a list of entities
         logger.info("Asking wit to interpret| {}".format(msg_txt))

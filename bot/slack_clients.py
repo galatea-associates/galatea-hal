@@ -9,6 +9,10 @@ from slackclient import SlackClient
 logger = logging.getLogger(__name__)
 
 
+def is_direct_message(channel_id):
+    return re.search('^D', channel_id)
+
+
 class SlackClients(object):
     def __init__(self, token):
         self.token = token
@@ -32,8 +36,11 @@ class SlackClients(object):
         else:
             return False
 
-    def is_direct_message(self,channel_id):
-        return re.search('^D', channel_id)
+    def remove_mention(self,message):
+        bot_user_name = self.rtm.server.login_data['self']['id']
+        tmp = re.sub("<@{}>:".format(bot_user_name),"", message)
+        tmp = re.sub("<@{}>".format(bot_user_name), "", tmp)
+        return tmp
 
     def send_user_typing_pause(self, channel_id, sleep_time=3.0):
         user_typing_json = {"type": "typing", "channel": channel_id}
