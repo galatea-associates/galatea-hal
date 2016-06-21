@@ -9,6 +9,7 @@ from slack_clients import is_direct_message
 
 logger = logging.getLogger(__name__)
 
+# this is a mapping of wit.ai intents to code that will handle those intents
 intents = {
     'movie-quote':Quote().do_it
 }
@@ -65,24 +66,24 @@ class RtmEventHandler(object):
 
         # Ask wit to interpret the text and send back a list of entities
         logger.info("Asking wit to interpret| {}".format(msg_txt))
-        resp = self.wit_client.interpret(msg_txt)
+        wit_resp = self.wit_client.interpret(msg_txt)
 
         # The "intent" entity sent back by wit should map to an action on our side
-        if 'intent' not in resp['entities']:
-            logger.info("Could not find an intent in the response: {}".format(resp))
+        if 'intent' not in wit_resp['entities']:
+            logger.info("Could not find an intent in the response: {}".format(wit_resp))
             self.msg_writer.write_prompt(channel_id)
             return
 
-        logger.info("Found intent(s) in response {}".format(resp['entities']['intent']))
+        logger.info("Found intent(s) in response {}".format(wit_resp['entities']['intent']))
 
         # Take the first intent for now.  We probably want to look at confidence levels in the future
-        intent = resp['entities']['intent'][0]
+        intent = wit_resp['entities']['intent'][0]
         intent_value = intent['value']
         confidence = intent['confidence']
         logger.info("Using first intent found {} with confidence {}".format(intent_value, confidence));
 
         if intent_value in intents:
-            intents[intent_value](self.msg_writer, event)
+            intents[intent_value](self.msg_writer, event, wit_resp)
         else:
             raise ReferenceError("No function found to handle intent {}".format(intent_value))
 

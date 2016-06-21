@@ -9,7 +9,7 @@ class Quote(object):
         self.do_it = do_it
 
 
-def do_it(msg_writer,event):
+def do_it(msg_writer,event,wit_resp):
     user_name = event['user']
     quotes = ["Affirmative, <@" + user_name + ">!. I read you",
               "I'm sorry, <@" + user_name + ">!. I'm afraid I can't do that",
