@@ -17,7 +17,6 @@ class Messenger(object):
         channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
 
     def write_prompt(self, channel_id, handlers):
-        bot_uid = self.clients.bot_user_id()
         txt = "Whut? I didn't quite understand that.  Here are some natural language *_intents_* I do understand:\n"
         for c in handlers:
             txt = txt + "> " + c + "\n"

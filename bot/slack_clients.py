@@ -36,9 +36,9 @@ class SlackClients(object):
         else:
             return False
 
-    def remove_mention(self,message):
+    def remove_mention(self, message):
         bot_user_name = self.rtm.server.login_data['self']['id']
-        tmp = re.sub("<@{}>:".format(bot_user_name),"", message)
+        tmp = re.sub("<@{}>:".format(bot_user_name), "", message)
         tmp = re.sub("<@{}>".format(bot_user_name), "", tmp)
         return tmp
 

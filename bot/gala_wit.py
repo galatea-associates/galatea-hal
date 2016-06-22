@@ -10,14 +10,15 @@ def merge(session_id, context, entities, msg):
     return context
 
 
-def say(self, session_id, context, msg):
+def say(session_id, context, msg):
     # Stub implementation
-    raise RuntimeError("Should not have been called. Session: {}. Msg: {}. Context: {}".format(session_id,msg,context))
+    raise RuntimeError("Should not have been called. Session: {}. Msg: {}. Context: {}".format(session_id,
+                                                                                               msg, context))
 
 
-def error(self, session_id, context, e):
+def error(session_id, context, e):
     # Stub implementation
-    raise RuntimeError("Should not have been called. Session: {}. Err   : {}. Context: {}".format(session_id,str(e),
+    raise RuntimeError("Should not have been called. Session: {}. Err   : {}. Context: {}".format(session_id, str(e),
                                                                                                   context))
 
 

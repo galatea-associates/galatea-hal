@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 # this is a mapping of wit.ai intenthandlers to code that will handle those intenthandlers
 intents = {
-    'movie-quote':Quote().do_it
+    'movie-quote': Quote().do_it
 }
 
 
@@ -35,10 +35,10 @@ class RtmEventHandler(object):
             self._handle_message(event)
         elif event_type == 'channel_joined':
             # you joined a channel
-            self.msg_writer.say_hi(event['channel'],event.get('user',""))
+            self.msg_writer.say_hi(event['channel'], event.get('user', ""))
         elif event_type == 'group_joined':
             # you joined a private group
-            self.msg_writer.say_hi(event['channel'],event.get('user',""))
+            self.msg_writer.say_hi(event['channel'], event.get('user', ""))
         else:
             pass
 
