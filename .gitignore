@@ -4,4 +4,8 @@
 .idea/modules.xml
 .idea/starter-python-bot.iml
 .idea/workspace.xml
+bot/.idea/misc.xml
+bot/.idea/vcx.xml
+bot/.idea/modules.xml
+bot/.idea/workspace.xml
 .idea/galatea-hal-casey.iml
