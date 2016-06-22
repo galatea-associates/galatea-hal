@@ -43,12 +43,12 @@ class RtmEventHandler(object):
             pass
 
     def _handle_message(self, event):
-        # Filter out messages from the bot itself
-        if self.clients.is_message_from_me(event['user']):
-            return
-
         # Event won't have a user if slackbot is unfurling messages for you
         if 'user' not in event:
+            return
+
+        # Filter out messages from the bot itself
+        if self.clients.is_message_from_me(event['user']):
             return
 
         msg_txt = event['text']
