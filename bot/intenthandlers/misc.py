@@ -4,12 +4,7 @@ import random
 logger = logging.getLogger(__name__)
 
 
-class Quote(object):
-    def __init__(self):
-        self.do_it = do_it
-
-
-def do_it(msg_writer, event, wit_resp):
+def say_quote(msg_writer, event, wit_entities):
     user_name = event['user']
     quotes = ["Affirmative, <@" + user_name + ">!. I read you",
               "I'm sorry, <@" + user_name + ">!. I'm afraid I can't do that",

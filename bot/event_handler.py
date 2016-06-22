@@ -2,15 +2,18 @@ import json
 import logging
 
 from gala_wit import GalaWit
-from intenthandlers.quote import Quote
+from intenthandlers.utils import get_highest_confidence_entity
+from intenthandlers.misc import say_quote
+from intenthandlers.galastats import count_galateans
 from slack_clients import is_direct_message
 
 
 logger = logging.getLogger(__name__)
 
-# this is a mapping of wit.ai intenthandlers to code that will handle those intenthandlers
+# this is a mapping of wit.ai intents to code that will handle those intents
 intents = {
-    'movie-quote': Quote().do_it
+    'movie-quote': say_quote,
+    'galatean-count': count_galateans
 }
 
 
@@ -67,22 +70,17 @@ class RtmEventHandler(object):
         logger.info("Asking wit to interpret| {}".format(msg_txt))
         wit_resp = self.wit_client.interpret(msg_txt)
 
-        # The "intent" entity sent back by wit should map to an action on our side
-        if 'intent' not in wit_resp['entities']:
-            logger.info("Could not find an intent in the response: {}".format(wit_resp))
+        # Find the intent with the highest confidence that met our default threshold
+        intent_entity = get_highest_confidence_entity(wit_resp['entities'], 'intent')
+
+        # If we couldn't find an intent entity, let the user know
+        if intent_entity is None:
             self.msg_writer.write_prompt(channel_id, intents)
             return
 
-        logger.info("Found intent(s) in response {}".format(wit_resp['entities']['intent']))
-
-        # Take the first intent for now.  We probably want to look at confidence levels in the future
-        intent = wit_resp['entities']['intent'][0]
-        intent_value = intent['value']
-        confidence = intent['confidence']
-        logger.info("Using first intent found {} with confidence {}".format(intent_value, confidence));
-
+        intent_value = intent_entity['value']
         if intent_value in intents:
-            intents[intent_value](self.msg_writer, event, wit_resp)
+            intents[intent_value](self.msg_writer, event, wit_resp['entities'])
         else:
             raise ReferenceError("No function found to handle intent {}".format(intent_value))
 
