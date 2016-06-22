@@ -27,6 +27,7 @@ class RtmEventHandler(object):
 
         if 'type' in event:
             self._handle_by_type(event['type'], event)
+        # do untyped events exist? if so, should we have an error case
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
@@ -44,6 +45,7 @@ class RtmEventHandler(object):
             self.msg_writer.say_hi(event['channel'], event.get('user', ""))
         else:
             pass
+
 
     def _handle_message(self, event):
         # Event won't have a user if slackbot is unfurling messages for you
@@ -63,6 +65,7 @@ class RtmEventHandler(object):
 
         # Remove mention of the bot so that the rest of the code doesn't need to
         msg_txt = self.clients.remove_mention(msg_txt).strip()
+        # Possible error if hal is mentioned in message to hal?
 
         # bot_uid = self.clients.bot_user_id()
 

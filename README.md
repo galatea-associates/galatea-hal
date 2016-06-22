@@ -3,7 +3,6 @@ galatea-hal
 
 ## Overview
 Galatea Hal is our own natural language enabled internal bot for common tasks.   
-
 Hal is hosted on BeepBoop. Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. 
 
 ## Development
@@ -71,4 +70,4 @@ Changes pushed to the remote master branch will automatically deploy a new versi
 
 ## License
 
-See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
+See the [LICENSE](LICENSE.txt) file for license rights and limitations (MIT).
