@@ -13,7 +13,7 @@ def count_galateans(msg_writer, event, wit_entities):
         'FL': 4,
     }
 
-    # We need to find a geocoding service for this
+    # We need to find a geocoding service for this so we don't need to hardcode
     location_normalization = {
         "london" : "LN",
         "england": "LN",
@@ -21,6 +21,10 @@ def count_galateans(msg_writer, event, wit_entities):
         "great britan": "LN",
         "uk": "LN",
         "boston": "MA",
+        "somerville": "MA",
+        "davis": "MA",
+        "davis square": "MA",
+        "davis sq": "MA",
         "massachusetts": "MA",
         "mass": "MA",
         "tampa": "FL",
