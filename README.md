@@ -75,6 +75,7 @@ To start your local version of hal, run the following steps:
 - cd to your project root folder (i.e. where you have requirements.txt)
 - pip install -r requirements.txt
 - set SLACK_TOKEN=[YOUR TEST HAL BOT's SLACK TOKEN]
+- set WIT_ACCESS_TOKEN=[YOUR WIT ACCESS TOKEN]
 - python ./bot/app.py
 
 Things are looking good if the console prints something like:
