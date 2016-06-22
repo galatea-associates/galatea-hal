@@ -39,7 +39,7 @@ class GalaWit(object):
 
         self.wit_client = Wit(wit_token, self.actions, logger)
 
-    def interpret(self,msg):
+    def interpret(self, msg):
         resp = self.wit_client.message(msg)
         logger.info("resp {}".format(resp))
         return resp

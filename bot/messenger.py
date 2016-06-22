@@ -16,19 +16,30 @@ class Messenger(object):
         channel = self.clients.rtm.server.channels.find(channel_id)
         channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
 
-    def write_prompt(self, channel_id):
+    def write_prompt(self, channel_id, handlers):
         bot_uid = self.clients.bot_user_id()
-        txt = "Whut? I didn't quite understand that..."
+        txt = "Whut? I didn't quite understand that.  Here are some natural language *_intents_* I do understand:\n"
+        for c in handlers:
+            txt = txt + "> " + c + "\n"
         self.send_message(channel_id, txt)
 
-#    def write_help(self,channel_id,intents):
+#    def write_help(self,channel_id,intenthandlers):
 #        bot_uid = self.clients.bot_user_id()
-#        usage = "Hello Human!  I'll *_respond_* to the following intents in channel [" + channel_id + "]:\n"
-#        for c in intents:
+#        usage = "Hello Human!  I'll *_respond_* to the following intenthandlers in channel [" + channel_id + "]:\n"
+#        for c in intenthandlers:
 #            if c.allowed(channel_id):
 #                usage = usage + "> " + c.usage(bot_uid) + "\n"
 #
 #        self.send_message(channel_id, usage)
+
+    def say_hi(self, channel_id, user):
+        greetings = ['Hi', 'Hello', 'Nice to meet you', 'Howdy', 'Salutations']
+        if user != "":
+            txt = '{}, <@{}>!'.format(random.choice(greetings), user)
+        else:
+            txt = '{}!'.format(random.choice(greetings))
+
+        self.send_message(channel_id, txt)
 
     def write_error(self, channel_id, err_msg):
         txt = ":face_with_head_bandage: my maker didn't handle this error very well:\n>```{}```".format(err_msg)

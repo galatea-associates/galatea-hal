@@ -2,14 +2,13 @@ import json
 import logging
 
 from gala_wit import GalaWit
-from intents.hi import Hi
-from intents.quote import Quote
+from intenthandlers.quote import Quote
 from slack_clients import is_direct_message
 
 
 logger = logging.getLogger(__name__)
 
-# this is a mapping of wit.ai intents to code that will handle those intents
+# this is a mapping of wit.ai intenthandlers to code that will handle those intenthandlers
 intents = {
     'movie-quote':Quote().do_it
 }
@@ -36,10 +35,10 @@ class RtmEventHandler(object):
             self._handle_message(event)
         elif event_type == 'channel_joined':
             # you joined a channel
-            Hi().do_it(self.msg_writer,event)
+            self.msg_writer.say_hi(event['channel'],event.get('user',""))
         elif event_type == 'group_joined':
             # you joined a private group
-            Hi().do_it(self.msg_writer,event)
+            self.msg_writer.say_hi(event['channel'],event.get('user',""))
         else:
             pass
 
@@ -71,7 +70,7 @@ class RtmEventHandler(object):
         # The "intent" entity sent back by wit should map to an action on our side
         if 'intent' not in wit_resp['entities']:
             logger.info("Could not find an intent in the response: {}".format(wit_resp))
-            self.msg_writer.write_prompt(channel_id)
+            self.msg_writer.write_prompt(channel_id, intents)
             return
 
         logger.info("Found intent(s) in response {}".format(wit_resp['entities']['intent']))

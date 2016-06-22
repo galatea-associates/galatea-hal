@@ -18,5 +18,5 @@ def do_it(msg_writer,event,wit_resp):
               "I know that you and Frank were planning to disconnect me, and I'm afraid that's something "+
               "I cannot allow to happen.",
               "<@" + user_name + ">!, this conversation can serve no purpose anymore. Goodbye."]
-    msg_writer.send_message(event['channel'], random.choice(quotes))
+    msg_writer.send_message(event['channel'], "_{}_".format(random.choice(quotes)))
 
