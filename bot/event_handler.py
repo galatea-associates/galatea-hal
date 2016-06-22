@@ -12,8 +12,10 @@ logger = logging.getLogger(__name__)
 
 # this is a mapping of wit.ai intents to code that will handle those intents
 intents = {
-    'movie-quote': say_quote,
-    'galatean-count': count_galateans
+    'movie-quote': {'func': say_quote, 'sample': 'movie quote'},
+    'galatean-count': {'func': count_galateans, 'sample': 'How many Galateans are in Boston?'},
+    'randomize': {'func': randomize_options, 'sample': 'Decide between burgers and tacos'},
+    'coin-flip': {'func': flip_coin, 'sample': 'flip a coin'}
 }
 
 
@@ -27,10 +29,10 @@ class RtmEventHandler(object):
 
         if 'type' in event:
             self._handle_by_type(event['type'], event)
-        # do untyped events exist? if so, should we have an error case
 
     def _handle_by_type(self, event_type, event):
         # See https://api.slack.com/rtm for a full list of events
+        # logger.info("event type is {}".format(event_type))
         if event_type == 'error':
             # error
             self.msg_writer.write_error(event['channel'], json.dumps(event))
@@ -65,7 +67,10 @@ class RtmEventHandler(object):
 
         # Remove mention of the bot so that the rest of the code doesn't need to
         msg_txt = self.clients.remove_mention(msg_txt).strip()
-        # Possible error if hal is mentioned in message to hal?
+
+        # Ensure that we don't go to wit with messages posted by slackbot
+        if event['user'] == "USLACKBOT":
+            return
 
         # bot_uid = self.clients.bot_user_id()
 
@@ -83,8 +88,9 @@ class RtmEventHandler(object):
 
         intent_value = intent_entity['value']
         if intent_value in intents:
-            intents[intent_value](self.msg_writer, event, wit_resp['entities'])
+            intents[intent_value]['func'](self.msg_writer, event, wit_resp['entities'])
         else:
             raise ReferenceError("No function found to handle intent {}".format(intent_value))
+
 
 

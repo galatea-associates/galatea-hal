@@ -14,3 +14,12 @@ def say_quote(msg_writer, event, wit_entities):
               "I cannot allow to happen.",
               "<@" + user_name + ">!, this conversation can serve no purpose anymore. Goodbye."]
     msg_writer.send_message(event['channel'], "_{}_".format(random.choice(quotes)))
+
+
+def randomize_options(msg_writer, event, wit_entities):
+    options = wit_entities['options']
+    msg_writer.send_message(event['channel'], "_{}_".format(random.choice(options)['value']))
+
+
+def flip_coin(msg_writer, event, wit_entities):
+    msg_writer.send_message(event['channel'], "_{}_".format(random.choice(['Heads', 'Tails'])))

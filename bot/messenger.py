@@ -17,9 +17,9 @@ class Messenger(object):
         channel.send_message("{}".format(msg.encode('ascii', 'ignore')))
 
     def write_prompt(self, channel_id, handlers):
-        txt = "Whut? I didn't quite understand that.  Here are some natural language *_intents_* I do understand:\n"
+        txt = "Whut? I didn't quite understand that.  Here are some *_statements_* I do understand:\n"
         for c in handlers:
-            txt = txt + "> " + c + "\n"
+            txt = txt + "> " + c['sample'] + "\n"
         self.send_message(channel_id, txt)
 
 #    def write_help(self,channel_id,intenthandlers):

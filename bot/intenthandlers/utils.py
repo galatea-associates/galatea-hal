@@ -25,3 +25,4 @@ def get_highest_confidence_entity(entities_dict, entity_name, confidence_thresho
                                                                      highest_confidence_entity['confidence']))
 
     return highest_confidence_entity
+
