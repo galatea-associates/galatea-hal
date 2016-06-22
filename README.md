@@ -2,38 +2,9 @@ galatea-hal
 =============
 
 ## Overview
-Galatea Hal is our own internal bot for common tasks.  
+Galatea Hal is our own natural language enabled internal bot for common tasks.   
 
 Hal is hosted on BeepBoop. Visit [Beep Boop](https://beepboophq.com/docs/article/overview) to get the scoop on the the Beep Boop hosting platform. 
-
-### First Conversations
-
-Here is an example interaction dialog that works with this bot:
-```
-Joe Dev [3:29 PM]
-hi @hal
-
-Hal BOT [3:29 PM]
-Nice to meet you, @hal!
-
-Joe Dev [3:30 PM]
-help @hal
-
-Hal BOT [3:30 PM]
-I'm your friendly Slack bot written in Python.  I'll ​*​_respond_​*​ to the following commands:
->`hi @hal` - I'll respond with a randomized greeting mentioning your user. :wave:
-> `@hal joke` - I'll tell you one of my finest jokes, with a typing pause for effect. :laughing:
-> `@hal attachment` - I'll demo a post with an attachment using the Web API. :paperclip:
-
-Joe Dev [3:31 PM]
-@hal: joke
-
-Hal BOT [3:31 PM]
-Why did the python cross the road?
-
-[3:31]
-To eat the chicken on the other side! :laughing:
-```
 
 ## Development
 I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
@@ -48,10 +19,10 @@ We assume you understand the following:
 - What docker is
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
-- How Wit.wi works: https://wit.ai/
+- How Wit.ai works: https://wit.ai/ .  Specifically the REST API: https://wit.ai/docs/http/20160526#get--message-link
 
 ### Dev Process
-- Ask Raj to add you as a collaborator
+- Ask Raj to add you as a collaborator to GitHub
 - Fork this repository
 - Make your changes
 - Test your changes
@@ -66,6 +37,8 @@ The `slack_clients.py` module provides a facade of two different Slack API clien
 2. [slacker](https://github.com/os/slacker) - Web API to Slack via RESTful methods.
 
 The `slack_bot.py` module implements and interface that is needed to run a multi-team bot using the Beep Boop Resource API client, by implementing an interface that includes `start()` and `stop()` methods and a function that spawns new instances of your bot: `spawn_bot`.  It is the main run loop of your bot instance that will listen to a particular Slack team's RTM events, and dispatch them to the `event_handler`.
+
+The `intenthandler` package contains the code that handles intents returned by wit.ai.  Make sure to read the REST API link under assumptions so that you understand exactly what is being returned (intent isn't the only entity).  If you add a new intent handler, you'll need to register it in the `intents` dict at the top of `event_handler.py`.  The key must be equal to the intent string that will be returned by wit.
 
 ### Testing locally (on windows)
 
