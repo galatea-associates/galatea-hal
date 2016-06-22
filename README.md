@@ -11,20 +11,28 @@ I hear you want to contribute to hal.  Awesome.  Here are some guidelines.
 
 ### Assumptions
 We assume you understand the following:
-- How to develop in Python2 
-  - Make sure to download latest version of Python 2.x.  https://www.python.org/downloads/
-  - You can use your favorite editor.  I like community edition of pycharm:  https://www.jetbrains.com/pycharm/download/#section=windows) 
+- How to develop in Python2 (we have a slack channel for this)
 - How to interact with GitHub. 
-  - This is a good set up guide:  https://help.github.com/articles/set-up-git/
 - What docker is
 - How REST APIs work. In fact, you should get a copy of postman from the chrome store
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
 - How Wit.ai works: https://wit.ai/ .  Specifically the REST API: https://wit.ai/docs/http/20160526#get--message-link
 
-### Dev Process
-- Ask Raj to add you as a collaborator to GitHub
+### Initial set up
+Here are some initial set up steps
+- Install latest version of Python 2.x.  https://www.python.org/downloads/
+- Add the python and python\scripts directories to your path (e.g. C:\Python27\ and C:\Python27\Scripts)
+- Install your favorite pyton editor.  I like community edition of pycharm:  https://www.jetbrains.com/pycharm/download/#section=windows)
+- Get postman extension to chrome:  https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en .  This should allow you to make REST calls to wit or slack.  It's a useful way to test.
+- Sign up for github and ask Raj to add you as a collaborator
+- Run through the github set up guide:  https://help.github.com/articles/set-up-git/
 - Fork this repository
+- Create a bot for yourself to test hal:  https://galaslack.slack.com/apps/manage/A0F7YS25R-bots .  This bot should be called test-hal-<your name> (e.g. test-hal-raj).  This will ensure that your changes don't break production hal.  Note: be polite and disable your bot when you are not using it.  You'll need to keep track of your bot's slack token when you go to test your bot.
+- Talk to Raj so we can figure out how best to share the wit app.  Wit used to have a fork feature but not sure that is there anymore.
+
+
+### Dev Process
 - Make your changes
 - Test your changes
 - Send Raj a pull request
@@ -43,13 +51,11 @@ The `intenthandler` package contains the code that handles intents returned by w
 
 ### Testing locally (on windows)
 
-Create a bot for yourself to test hal:  https://galaslack.slack.com/apps/manage/A0F7YS25R-bots .  This bot should be called test-hal-<your name> (e.g. test-hal-raj).  This will ensure that your changes don't break production hal.  Note: be polite and disable your bot when you are not using it.
-
-To start your local version of hal, run the following steps:
+To start your local version of hal, run the following steps from a command prompt:
 - cd to your project root folder (i.e. where you have requirements.txt)
-- pip install -r requirements.txt
-- set SLACK_TOKEN=[YOUR TEST HAL BOT's SLACK TOKEN]
-- set WIT_ACCESS_TOKEN=[YOUR WIT ACCESS TOKEN]
+- pip install -r requirements.txt (you should only have to do this when you run the bot for the first time on your computer OR the requirements file changes)
+- set SLACK_TOKEN=[YOUR TEST HAL BOT's SLACK TOKEN] (you should only have to set this once per command prompt instance)
+- set WIT_ACCESS_TOKEN=[YOUR WIT ACCESS TOKEN] (you should only have to set this once per command prompt instance)
 - python ./bot/app.py
 
 Things are looking good if the console prints something like:
@@ -57,6 +63,8 @@ Things are looking good if the console prints something like:
 	Connected <your bot name> to <your slack team> team at https://<your slack team>.slack.com.
 
 If you want change the logging level, also `set LOG_LEVEL=<your level>`
+
+Use the old ctrl-c if you want to kill the bot.
 
 ### Deploying to prod
 Changes pushed to the remote master branch will automatically deploy a new version of hal
