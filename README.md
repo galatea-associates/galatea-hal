@@ -17,6 +17,7 @@ We assume you understand the following:
 - How to interact with GitHub. 
   - This is a good set up guide:  https://help.github.com/articles/set-up-git/
 - What docker is
+- How REST APIs work. In fact, you should get a copy of postman from the chrome store
 - The slack realtime API:  https://api.slack.com/rtm  
 - How BeeBoop works: https://beepboophq.com/docs 
 - How Wit.ai works: https://wit.ai/ .  Specifically the REST API: https://wit.ai/docs/http/20160526#get--message-link
