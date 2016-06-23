@@ -1,9 +1,12 @@
 import json
 import logging
 
+
 from gala_wit import GalaWit
 from intenthandlers.utils import get_highest_confidence_entity
 from intenthandlers.misc import say_quote
+from intenthandlers.misc import randomize_options
+from intenthandlers.misc import flip_coin
 from intenthandlers.galastats import count_galateans
 from slack_clients import is_direct_message
 
@@ -48,7 +51,6 @@ class RtmEventHandler(object):
         else:
             pass
 
-
     def _handle_message(self, event):
         # Event won't have a user if slackbot is unfurling messages for you
         if 'user' not in event:
@@ -91,6 +93,5 @@ class RtmEventHandler(object):
             intents[intent_value]['func'](self.msg_writer, event, wit_resp['entities'])
         else:
             raise ReferenceError("No function found to handle intent {}".format(intent_value))
-
 
 
