@@ -17,7 +17,7 @@ def say_quote(msg_writer, event, wit_entities):
 
 
 def randomize_options(msg_writer, event, wit_entities):
-    options = wit_entities['options']
+    options = wit_entities['randomize_option']
     msg_writer.send_message(event['channel'], "_{}_".format(random.choice(options)['value']))
 
 
