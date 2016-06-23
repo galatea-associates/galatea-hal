@@ -3,7 +3,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-def get_highest_confidence_entity(entities_dict, entity_name, confidence_threshold=0.75) :
+def get_highest_confidence_entity(entities_dict, entity_name, confidence_threshold=0.75):
     if entity_name not in entities_dict:
         return None
 

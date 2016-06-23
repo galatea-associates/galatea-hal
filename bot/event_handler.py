@@ -15,10 +15,10 @@ logger = logging.getLogger(__name__)
 
 # this is a mapping of wit.ai intents to code that will handle those intents
 intents = {
-    'movie-quote': {'func': say_quote, 'sample': 'movie quote'},
-    'galatean-count': {'func': count_galateans, 'sample': 'How many Galateans are in Boston?'},
-    'randomize': {'func': randomize_options, 'sample': 'Decide between burgers and tacos'},
-    'coin-flip': {'func': flip_coin, 'sample': 'flip a coin'}
+    'movie-quote': (say_quote, 'movie quote'),
+    'galatean-count': (count_galateans, 'How many Galateans are in Boston?'),
+    'randomize': (randomize_options, 'Decide between burgers and tacos'),
+    'coin-flip': (flip_coin, 'flip a coin')
 }
 
 
@@ -90,7 +90,7 @@ class RtmEventHandler(object):
 
         intent_value = intent_entity['value']
         if intent_value in intents:
-            intents[intent_value]['func'](self.msg_writer, event, wit_resp['entities'])
+            intents[intent_value][0](self.msg_writer, event, wit_resp['entities'])
         else:
             raise ReferenceError("No function found to handle intent {}".format(intent_value))
 
