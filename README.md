@@ -28,13 +28,14 @@ Here are some initial set up steps
 - Run through the github set up guide:  https://help.github.com/articles/set-up-git/
 - Fork this repository
 - Create a bot for yourself to test hal:  https://galaslack.slack.com/apps/manage/A0F7YS25R-bots .  This bot should be called test-hal-<your name> (e.g. test-hal-raj).  This will ensure that your changes don't break production hal.  Note: be polite and disable your bot when you are not using it.  You'll need to keep track of your bot's slack token when you go to test your bot.
-- Talk to Raj so we can figure out how best to share the wit app.  Wit used to have a fork feature but not sure that is there anymore.
+- Ask Raj to add you as a collaborator on the Hal-Test wit.ai project.  https://wit.ai/GalateaRaj/Hal-Test/
 
 
 ### Dev Process
 - Make your changes
 - Test your changes
-- Send Raj a pull request
+- Send Raj a pull request so he can deploy to prod
+- Send Raj the sentences + entities he needs to use to train Hal in prod
 
 ### Code Organization
 If you want to add or change an event that the bot responds (e.g. when the bot is mentioned, when the bot joins a channel, when a user types a message, etc.), you can modify the `_handle_by_type` method in `event_handler.py`.
@@ -54,7 +55,7 @@ To start your local version of hal, run the following steps from a command promp
 - cd to your project root folder (i.e. where you have requirements.txt)
 - pip install -r requirements.txt (you should only have to do this when you run the bot for the first time on your computer OR the requirements file changes)
 - set SLACK_TOKEN=[YOUR TEST HAL BOT's SLACK TOKEN] (you should only have to set this once per command prompt instance)
-- set WIT_ACCESS_TOKEN=[YOUR WIT ACCESS TOKEN] (you should only have to set this once per command prompt instance)
+- set WIT_ACCESS_TOKEN=[HAL-TEST WIT ACCESS TOKEN FROM SLACK CHANNEL] (you should only have to set this once per command prompt instance)
 - python ./bot/app.py
 
 Things are looking good if the console prints something like:
@@ -67,6 +68,8 @@ Use the old ctrl-c if you want to kill the bot.
 
 ### Deploying to prod
 Changes pushed to the remote master branch will automatically deploy a new version of hal
+
+
 
 ## License
 
