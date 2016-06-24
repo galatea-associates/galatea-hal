@@ -31,7 +31,7 @@ Here are some initial set up steps
 - Ask Raj to add you as a collaborator on the Hal-Test wit.ai project.  https://wit.ai/GalateaRaj/Hal-Test/
 
 
-### Dev Process
+### Change Management Process
 - Make your changes
 - Test your changes
 - Send Raj a pull request so he can deploy to prod
@@ -67,8 +67,9 @@ If you want change the logging level, also `set LOG_LEVEL=<your level>`
 Use the old ctrl-c if you want to kill the bot.
 
 ### Deploying to prod
-Changes pushed to the remote master branch will automatically deploy a new version of hal
+Changes pushed to the remote master branch will automatically deploy a new version of hal.
 
+Make sure to send Raj the sentences + entities that he needs to put into prod wit.ai
 
 
 ## License
