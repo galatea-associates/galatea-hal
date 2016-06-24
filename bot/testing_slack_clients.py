@@ -37,8 +37,9 @@ class TestSlackClients(unittest.TestCase, slack_clients.SlackClients):
         self.assertEqual(self.remove_mention(message_1), ' say hello')
         self.assertEqual(self.remove_mention(message_2), ' say hello')
 
-    # NOTE: NO CURRENT TEST FOR send_user_typing_pause
-
+    def test_send_user_typing_pause(self):
+        self.rtm.server.send_to_websocket = MagicMock(return_value=None)
+        self.assertEqual(self.send_user_typing_pause("dummy channel"), None)
 
 if __name__ == '__main__':
     unittest.main()
