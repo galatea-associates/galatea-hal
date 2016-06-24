@@ -10,12 +10,14 @@ class TestMessenger(unittest.TestCase, Messenger):
     def setUp(self):
         pass
 
+    # Test send message
     def test_send_message(self):
         logger.debug = MagicMock(return_value=None)
         self.clients = Mock(rtm=Mock(server=Mock(channels=Mock(find=Mock()))))
         self.clients.send_message = MagicMock(return_value=None)
         self.assertEqual(self.send_message("dummy channel", "dummy message"), None)
 
+    # Test write prompt
     def test_write_prompt(self):
         dummy_handlers = {
             "item 1": ("junk", "sample 1"),
@@ -25,10 +27,12 @@ class TestMessenger(unittest.TestCase, Messenger):
         self.send_message = MagicMock(return_value=None)
         self.assertEqual(self.write_prompt("dummy channel", dummy_handlers), None)
 
+    # Test say hi
     def test_say_hi(self):
         self.send_message = MagicMock(return_value=None)
         self.assertEqual(self.say_hi("dummy channel", "dummy user"), None)
 
+    # Test write error
     def test_write_error(self):
         self.send_message = MagicMock(return_value=None)
         self.assertEqual(self.write_error("dummy channel", "dummy error message"), None)

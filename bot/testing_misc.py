@@ -24,8 +24,10 @@ def error(session_id, context, e):
     raise RuntimeError("Should not have been called. Session: {}. Err   : {}. Context: {}".format(session_id, str(e),
                                                                                                   context))
 
+
 class TestMisc(unittest.TestCase):
     def setUp(self):
+        # Set up environment to allow for misc testing
         self.clients = SlackClients('na')
         self.logger = logging.getLogger(__name__)
         self.actions = {
@@ -38,16 +40,19 @@ class TestMisc(unittest.TestCase):
         self.msg_writer.send_message = MagicMock(return_value=None)
         pass
 
+    # Test Say Quote
     def test_say_quote(self):
         event = {'user': 'dummy_user', 'channel': 'dummy_channel'}
         wit_entities = None
         self.assertEqual(misc.say_quote(self.msg_writer, event, wit_entities), None)
 
+    # Test randomize options
     def test_randomize_options(self):
         event = {'user': 'dummy_user', 'channel': 'dummy_channel'}
         wit_entities = {'randomize_option': [{'value': 'cookies'}, {'value': 'cake'}]}
         self.assertEqual(misc.randomize_options(self.msg_writer, event, wit_entities), None)
 
+    # Test flip coin
     def test_flip_coin(self):
         event = {'user': 'dummy_user', 'channel': 'dummy_channel'}
         wit_entities = None

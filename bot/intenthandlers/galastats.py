@@ -4,7 +4,8 @@ from utils import get_highest_confidence_entity
 logger = logging.getLogger(__name__)
 
 
-def count_galateans(msg_writer, event, wit_entities):
+# added ghce=get_highest_confidence_entity to allow for testing with alternate GHCE
+def count_galateans(msg_writer, event, wit_entities, ghce=get_highest_confidence_entity):
 
     # We need to get this from our google apps integration instead of hardcoding
     office_counts = {
@@ -32,7 +33,7 @@ def count_galateans(msg_writer, event, wit_entities):
     }
 
     # Find the location with the highest confidence that met our default threshold
-    loc_entity = get_highest_confidence_entity(wit_entities, 'location')
+    loc_entity = ghce(wit_entities, 'location')
     if loc_entity is not None:
         loc = loc_entity['value'].lower()
     else:
