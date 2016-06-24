@@ -15,10 +15,10 @@ def count_galateans(msg_writer, event, wit_entities):
 
     # We need to find a geocoding service for this so we don't need to hardcode
     location_normalization = {
-        "london" : "LN",
+        "london": "LN",
         "england": "LN",
-        "britan": "LN",
-        "great britan": "LN",
+        "britain": "LN",
+        "great britain": "LN",
         "uk": "LN",
         "boston": "MA",
         "somerville": "MA",
@@ -40,7 +40,7 @@ def count_galateans(msg_writer, event, wit_entities):
 
     # We need to normalize the location since wit doesn't do that for us
     # Need to use a geocode service for this instead of our hack
-    normalized_loc = location_normalization.get(loc,"all")
+    normalized_loc = location_normalization.get(loc, "all")
 
     txt = ""
     if normalized_loc == "all":

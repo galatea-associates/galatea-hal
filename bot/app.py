@@ -12,8 +12,7 @@ from slack_bot import spawn_bot
 logger = logging.getLogger(__name__)
 
 
-if __name__ == "__main__":
-
+def main():
     log_level = os.getenv("LOG_LEVEL", "INFO")
     logging.basicConfig(format='%(asctime)s - %(levelname)s: %(message)s', level=log_level)
     # Log this at error level even though it's not an error, because we want to be sure the message is seen
@@ -32,3 +31,7 @@ if __name__ == "__main__":
         # only want to run a single instance of the bot in dev mode
         bot = SlackBot(slack_token)
         bot.start({})
+
+
+if __name__ == "__main__":
+    main()

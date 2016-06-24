@@ -2,12 +2,10 @@ import logging
 import types
 import unittest
 
-from hypothesis import given, settings, Verbosity
-from hypothesis.strategies import text
 from schema import Schema
 from mock import MagicMock
 from wit import Wit
-from messenger import Messenger
+
 
 from event_handler import RtmEventHandler, intents
 from messenger import Messenger
