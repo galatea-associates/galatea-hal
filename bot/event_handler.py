@@ -21,6 +21,7 @@ intents = {
     'coin-flip': (flip_coin, 'flip a coin')
 }
 
+# List of users for the bot to ignore
 user_ignore_list = ['USLACKBOT']
 
 
@@ -54,6 +55,7 @@ class RtmEventHandler(object):
             pass
 
     def _handle_message(self, event):
+
         # Event won't have a user if slackbot is unfurling messages for you
         if 'user' not in event:
             return
@@ -95,5 +97,3 @@ class RtmEventHandler(object):
             intents[intent_value][0](self.msg_writer, event, wit_resp['entities'])
         else:
             raise ReferenceError("No function found to handle intent {}".format(intent_value))
-
-
