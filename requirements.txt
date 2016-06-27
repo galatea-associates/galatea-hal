@@ -1,9 +1,12 @@
 beepboop==0.1.1
 docutils==0.12
+enum34==1.1.6
+hypothesis==3.4.0
 lockfile==0.12.2
 python-daemon==2.1.1
 PyYAML==3.11
 requests==2.9.1
+simplejson==3.8.2
 six==1.10.0
 slackclient==1.0.0
 slacker==0.9.9

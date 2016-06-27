@@ -4,7 +4,6 @@ from wit import Wit
 
 logger = logging.getLogger(__name__)
 
-
 def merge(session_id, context, entities, msg):
     # Stub implementation
     return context
@@ -23,7 +22,7 @@ def error(session_id, context, e):
 
 
 class GalaWit(object):
-    def __init__(self):
+    def __init__(self, witlib=Wit):  # Added witlib=Wit to allow test code to send a mock Wit
         wit_token = os.getenv("WIT_ACCESS_TOKEN", "")
         logger.info("wit access token: {}".format(wit_token))
 
@@ -38,7 +37,7 @@ class GalaWit(object):
             'merge': merge,
         }
 
-        self.wit_client = Wit(wit_token, self.actions, logger)
+        self.wit_client = witlib(wit_token, self.actions, logger)
 
     def interpret(self, msg):
         resp = self.wit_client.message(msg)

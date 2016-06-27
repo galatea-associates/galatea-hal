@@ -14,7 +14,7 @@ def spawn_bot():
 
 
 class SlackBot(object):
-    def __init__(self, token=None):
+    def __init__(self, token=None, slack_clients=SlackClients):  # added slack_clients=SlackClients to allow for mocking
         """Creates Slacker Web and RTM clients with API Bot User token.
 
         Args:
@@ -23,9 +23,9 @@ class SlackBot(object):
         self.last_ping = 0
         self.keep_running = True
         if token is not None:
-            self.clients = SlackClients(token)
+            self.clients = slack_clients(token)
 
-    def start(self, resource):
+    def start(self, resource, messenger=Messenger, rtmEventHandler=RtmEventHandler):
         """Creates Slack Web and RTM clients for the given Resource
         using the provided API tokens and configuration, then connects websocket
         and listens for RTM events.
@@ -44,8 +44,8 @@ class SlackBot(object):
                 self.clients.rtm.server.login_data['team']['name'],
                 self.clients.rtm.server.domain))
 
-            msg_writer = Messenger(self.clients)
-            event_handler = RtmEventHandler(self.clients, msg_writer)
+            msg_writer = messenger(self.clients)
+            event_handler = rtmEventHandler(self.clients, msg_writer)
 
             while self.keep_running:
                 for event in self.clients.rtm.rtm_read():

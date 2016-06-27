@@ -4,7 +4,8 @@ from utils import get_highest_confidence_entity
 logger = logging.getLogger(__name__)
 
 
-def count_galateans(msg_writer, event, wit_entities):
+# added ghce=get_highest_confidence_entity to allow for testing with alternate GHCE
+def count_galateans(msg_writer, event, wit_entities, ghce=get_highest_confidence_entity):
 
     # We need to get this from our google apps integration instead of hardcoding
     office_counts = {
@@ -15,10 +16,10 @@ def count_galateans(msg_writer, event, wit_entities):
 
     # We need to find a geocoding service for this so we don't need to hardcode
     location_normalization = {
-        "london" : "LN",
+        "london": "LN",
         "england": "LN",
-        "britan": "LN",
-        "great britan": "LN",
+        "britain": "LN",
+        "great britain": "LN",
         "uk": "LN",
         "boston": "MA",
         "somerville": "MA",
@@ -32,7 +33,7 @@ def count_galateans(msg_writer, event, wit_entities):
     }
 
     # Find the location with the highest confidence that met our default threshold
-    loc_entity = get_highest_confidence_entity(wit_entities, 'location')
+    loc_entity = ghce(wit_entities, 'location')
     if loc_entity is not None:
         loc = loc_entity['value'].lower()
     else:
@@ -40,7 +41,7 @@ def count_galateans(msg_writer, event, wit_entities):
 
     # We need to normalize the location since wit doesn't do that for us
     # Need to use a geocode service for this instead of our hack
-    normalized_loc = location_normalization.get(loc,"all")
+    normalized_loc = location_normalization.get(loc, "all")
 
     txt = ""
     if normalized_loc == "all":
