@@ -21,6 +21,8 @@ intents = {
     'coin-flip': (flip_coin, 'flip a coin')
 }
 
+user_ignore_list = ['USLACKBOT']
+
 
 class RtmEventHandler(object):
     def __init__(self, slack_clients, msg_writer):
@@ -70,8 +72,8 @@ class RtmEventHandler(object):
         # Remove mention of the bot so that the rest of the code doesn't need to
         msg_txt = self.clients.remove_mention(msg_txt).strip()
 
-        # Ensure that we don't go to wit with messages posted by slackbot
-        if event['user'] == "USLACKBOT":
+        # Ensure that we don't go to wit with messages posted by an ignored user
+        if event['user'] in user_ignore_list:
             return
 
         # bot_uid = self.clients.bot_user_id()
