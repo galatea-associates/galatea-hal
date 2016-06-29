@@ -15,10 +15,10 @@ logger = logging.getLogger(__name__)
 
 # this is a mapping of wit.ai intents to code that will handle those intents
 intents = {
-    'movie-quote': (say_quote, 'movie quote'),
+    'movie-quote': (say_quote, 'Tell me a good movie quote'),
     'galatean-count': (count_galateans, 'How many Galateans are in Boston?'),
     'randomize': (randomize_options, 'Decide between burgers and tacos'),
-    'coin-flip': (flip_coin, 'flip a coin')
+    'coin-flip': (flip_coin, 'Flip a coin')
 }
 
 
