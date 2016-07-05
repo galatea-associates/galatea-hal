@@ -30,6 +30,7 @@ Here are some initial set up steps
 - Create a bot for yourself to test hal:  https://galaslack.slack.com/apps/manage/A0F7YS25R-bots .  This bot should be called test-hal-<your name> (e.g. test-hal-raj).  This will ensure that your changes don't break production hal.  Note: be polite and disable your bot when you are not using it.  You'll need to keep track of your bot's slack token when you go to test your bot.
 - Ask Raj to add you as a collaborator on the Hal-Test wit.ai project.  https://wit.ai/GalateaRaj/Hal-Test/
 
+Test change
 
 ### Change Management Process
 - Make your changes
